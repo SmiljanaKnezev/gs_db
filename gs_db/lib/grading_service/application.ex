@@ -15,7 +15,6 @@ defmodule GradingService.Application do
       # Starts a worker by calling: GradingService.Worker.start_link(arg1, arg2, arg3)
       # worker(GradingService.Worker, [arg1, arg2, arg3]),
       Cowboy.child_spec(:http, GradingService.Router, [], [port: 4000]),
-      UserData,
       supervisor(GradingService.Repo, []),
     ]
 

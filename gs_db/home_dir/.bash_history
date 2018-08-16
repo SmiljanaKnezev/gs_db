@@ -72,3 +72,36 @@ iex -S mix
 iex -S mix
 iex -S mix
 iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+iex -S mix
+jq
+sudo apt-get install jq

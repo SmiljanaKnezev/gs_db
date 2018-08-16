@@ -7,7 +7,7 @@ defmodule GradingService.Mixfile do
   def project do
     [app: :grading_service,
      version: "0.2.0",
-     #elixir: "~> 1.6",
+     elixir: "~> 1.6",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -42,6 +42,7 @@ defmodule GradingService.Mixfile do
       { :elixir_uuid, "~> 1.2" },
       {:ecto, "~> 2.2.10"},
       {:postgrex, "~> 0.13.5"},
+      {:wormhole, "~> 2.2"},
     ]
   end
 end

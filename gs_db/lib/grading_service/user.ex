@@ -2,7 +2,7 @@ defmodule GradingService.User do
   use Ecto.Schema
 
   import Ecto.Changeset
-  #import Ecto.Query, only: [from: 2]
+  import Ecto.Query
 
   alias GradingService.Repo
   alias GradingService.User
@@ -26,40 +26,59 @@ defmodule GradingService.User do
     Repo.get!(User, user_id)
   end
 
-  #ostali su za update
+  def get_id(username) do
+  user =  User |> Repo.get_by(username: username)
+  user.id
+  end
 
-  #   def update_note(%{"id" => note_id} = note_changes) do
-  #   Repo.get!(Note, note_id)
-  #   |> cast(note_changes, @required_fields, @optional_fields)
-  #   |> Repo.update!
-  # end
-
-  def update_questions(%{"id" => user_id} = user_changes) do
-  	Repo.get!(User, user_id)
-  	|> cast(user_changes, @required_fields)
-  	|> prepare_changes(fn changeset ->
-    assoc(changeset.data, :user)
-    |> changeset.repo.update_all(inc: [questions: 1])
-    changeset
-  end)
-  	#|> update_change(:questions, 2) #ovo nosta ne radi
-  	 #|> Repo.update!
-#  	  	|> update_change(:questions, &(&1 + 1))
-
+  def get_question_handle(user_id) do
+    user = Repo.get!(User, user_id)
+    user.question_handles
   end
 
 
+def update_questions(user_id) do
+   %User{}
+   |> changeset()
+   |> increment_questions_counter(user_id)
+end
 
-# def create_comment(comment, params) do
-#   comment
-#   |> cast(params, [:body, :post_id])
-#   |> prepare_changes(fn changeset ->
-#     assoc(changeset.data, :post)
-#     |> changeset.repo.update_all(inc: [comment_count: 1])
-#     changeset
-#   end)
-# end
+def update_correct(user_id) do
+   %User{}
+   |> changeset()
+   |> increment_correct_counter(user_id)
+end
 
+def add_question_handle(user_id) do
+  user = get_user(user_id)
+  User.changeset(user, %{question_handles:  UUID.uuid4()})
+  |> Repo.update!
+  get_question_handle(user_id)
+end
 
+def reset_question_handle(user_id) do
+  user = get_user(user_id)
+  User.changeset(user, %{question_handles:  "0"})
+  |> Repo.update!
+end
 
+def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:username, :questions, :correct, :id, :question_handles])
+end
 
+defp increment_questions_counter(changeset, user_id) do
+    "users"
+      |> where([u], u.id == ^user_id)
+      |> Repo.update_all(inc: [questions: 1])
+    changeset
+end
+
+defp increment_correct_counter(changeset, user_id) do
+    "users"
+      |> where([u], u.id == ^user_id)
+      |> Repo.update_all(inc: [correct: 1])
+    changeset
+end
+
+end
